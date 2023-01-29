@@ -3,21 +3,24 @@
 Most projects that I have done,
 I haven't seen class dependency as problematic.
 Now I've come more familiar with the subject, and now I want to correct this way of thinking.
-I want to study architecture point of view how design and implement classes with minimal number of dependencies. 
+I want
+to study more deeply object-oriented software development how design
+and implement classes with minimal number of dependencies. 
 Dependencies are not always bad and with object-oriented programming,
 we need to create dependencies to interact with other objects.
+Still, when creating class, we need to keep in mind all dependency's and avoid unnecessary dependencies between classes.
 
 # Project diary
 ## Planning
+### 29.1.2029
 The current plan is to get an overall overview scope of the project. 
 Because this project is related to my thesis work and I have only limited time,
 I need to specify scope for this project.
-## Under development
-* Readme file
-* Project scope
-## Done
+#### Updates
+* Fill readme.md file with ideas and what project is about
+* Determine project scope
 
-# Sources for the project
+# Dependencies types
 ## Circular dependencies
 [Circular dependencies](https://en.wikipedia.org/wiki/Circular_dependency) are that object A depends on object B and another way around.
 This is the same kind problem as a chicken egg dilemma.
@@ -46,8 +49,17 @@ bool is_odd(unsigned int n) {
 For test this recursive function, we give number 4 is_odd function. 
 is_odd function will pass 4-1 to is_even function.
 This continues between functions until the given number is 0.
+These two functions depend on each other to perform calculations.
 
 ## Cyclic dependencies
-## Cmake
-## Libraries static and dynamic
-## C++
+A cyclic dependency is formed when two or more abstractions have direct or indirect dependencies on each other.
+Cyclic dependencies between abstractions violate the [Acyclic Dependencies Principle (ADP)](https://en.wikipedia.org/wiki/Acyclic_dependencies_principle)
+and Ordering Principle.
+(Girish Suryanarayana, Ganesh Samarthyam, Tushar Sharma. Refactoring for software. Desing Smells. 2014)
+Cyclic dependencies between two abstractions solved using interface.
+
+![Circular dependency](./images/cyclic_solved.png)
+
+# Cmake
+# Libraries static and dynamic
+# C++
