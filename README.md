@@ -12,7 +12,9 @@ Still, when creating class, we need to keep in mind all dependency's and avoid u
 
 # Project diary
 ## Planning
-### 29.1.2029
+### 30.1.2023
+Added object types
+### 29.1.2023
 The current plan is to get an overall overview scope of the project. 
 Because this project is related to my thesis work and I have only limited time,
 I need to specify scope for this project.
@@ -63,3 +65,14 @@ Cyclic dependencies between two abstractions solved using interface.
 # Cmake
 # Libraries static and dynamic
 # C++
+## Object types
+According to an Ivar Jacobson objects have three different types. 
+In a book, he defines entity, 
+interface and control objects and those all have special purposes of object-oriented software.
+* **Entity object** models information in the system that should be held for a longer time.
+* **The interface object** model behavior and information that is dependent on the interface to the system.
+* **The control objects** model functionality that is not naturally tied to any other object.
+
+***Ivar Jacobson. Object-oriented software engineering. A use case driven approach. 1998.***
+
+How can we define good objects for the program?
