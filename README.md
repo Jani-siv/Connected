@@ -12,9 +12,13 @@ Still, when creating class, we need to keep in mind all dependency's and avoid u
 
 # Project diary
 ## Planning
-### 30.1.2023
+**31.1.2023**
+Added design patterns to readme
+
+**30.1.2023**
 Added object types
-### 29.1.2023
+
+**29.1.2023**
 The current plan is to get an overall overview scope of the project. 
 Because this project is related to my thesis work and I have only limited time,
 I need to specify scope for this project.
@@ -76,3 +80,30 @@ interface and control objects and those all have special purposes of object-orie
 ***Ivar Jacobson. Object-oriented software engineering. A use case driven approach. 1998.***
 
 How can we define good objects for the program?
+
+## Desing patterns
+All well-structured object-oriented architectures are full of patterns.
+Indeed, one of the ways that I measure the quality of an object-oriented system is 
+to judge whether its developers have paid careful attention to the common collaborations among its objects.
+Gamma Erich, Helm Richard, Johnson Ralph, Vlissides John, Desing Patterns Element of Reusable Object-Oriented Software. 2005
+In foreword paragraph gang of four answering my question: How we can set objects interacting with each other?
+From the definition of object types to well-structured systems in a long way to go. 
+Next, we need a deep dive to a world of design patterns.
+
+### Images for reminder:
+![Creating instance of another class](./images/createInstance.png)
+
+Instantiator creating instance from Instantiatee 
+
+![Class A have reference of class B](./images/classReference.png)
+
+Class A has reference of class B, and it's easy to change on runtime with another class that has the same type.
+
+### Rules and words
+* ***Program to an interface, not an implementation.***
+* ***Favor object composition over class inheritance.***
+* Inheritance
+* Composition
+* Templates (Parametrized types)
+
+
