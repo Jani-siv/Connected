@@ -12,6 +12,9 @@ Still, when creating class, we need to keep in mind all dependency's and avoid u
 
 # Project diary
 ## Planning
+**1.2.2023**
+Added Composition and aggregate UML and short explanations
+
 **31.1.2023**
 Added design patterns to readme
 
@@ -98,6 +101,49 @@ Instantiator creating instance from Instantiatee
 ![Class A have reference of class B](./images/classReference.png)
 
 Class A has reference of class B, and it's easy to change on runtime with another class that has the same type.
+
+### Aggregation
+
+To qualify as an Aggregation, a whole object and its parts must have the following relationship:
+* The part (member) is part of the object (class)
+* The part (member) can (if desired) belong to more than one object (class) at a time 
+* The part (member) does not have its existence managed by the object (class)
+* The part (member) does not know about the existence of the object (class)
+
+To store multiple references in one object we need, use std::reference_wrapper.
+```std::vector<std::reference_wrapper<std::string>> names{ tom, berta }; // these strings are stored by reference, not value```
+
+UML picture of aggregation
+
+![Class have aggregetion of another class](./images/aggregation.png)
+
+Class B holds one or more reference/pointer to class A.
+When class B is destroyed only reference and a pointer will be destroyed.
+
+[Learn CPP](https://www.learncpp.com/cpp-tutorial/aggregation/) 2023
+
+### Composition
+
+To qualify as a composition, an object and a part must have the following relationship:
+* The part (member) is part of the object (class)
+* The part (member) can only belong to one object (class) at a time
+* The part (member) has its existence managed by the object (class)
+* The part (member) does not know about the existence of the object (class)
+
+Composition is the stronger form of aggregation.
+Composition can occur when a class is a collection or container of other classes,
+but where the contained classes have a strong life cycle dependency on the container—essentially,
+if the container is destroyed, its contents are also destroyed
+
+UML picture of composition
+
+![Class have composition of another class](./images/composition.png)
+
+Example class B creates a private instance of Class A. When class B is destroyed also class A will be destroyed.
+
+[CppCodeTips.com](https://cppcodetips.wordpress.com/2013/12/23/uml-class-diagram-explained-with-c-samples/) 2023
+
+[Learn CPP](https://www.learncpp.com/cpp-tutorial/composition/) 2023
 
 ### Rules and words
 * ***Program to an interface, not an implementation.***
