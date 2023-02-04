@@ -12,6 +12,8 @@ Still, when creating class, we need to keep in mind all dependency's and avoid u
 
 # Project diary
 ## Planning
+**4.2.2023**
+Added class definition and coupling
 **1.2.2023**
 Added Composition and aggregate UML and short explanations
 
@@ -72,7 +74,40 @@ Cyclic dependencies between two abstractions solved using interface.
 # Cmake
 # Libraries static and dynamic
 # C++
-## Object types
+
+## Object
+An object will always have four important facets:
+* its own identity (This might only be its address in memory.);
+* the attributes of its class (usually static) and values for those attributes (usually dynamic);
+* the behavior of its class (the implementor's view);
+* the published interface of its class (the user's view).
+
+### Classes concrete/abstract
+* Classes that do not know how to instantiate objects are called **abstract classes**.
+* Classes that do know how to instantiate objects are called **concrete classes**.
+
+### Coupling
+
+There are five basic forms of coupling between classes: 
+
+**nil coupling** Means that two classes that have absolutely no dependency on one another (nil coupling is a class library)
+
+**export coupling** Means that class is dependent on the public interface of another class, that is,
+it uses one or more published operations of another class.
+
+**overt coupling** occurs when one class uses the implementation details of another class with permission.
+A good example of overt coupling can be found in the “friend” mechanism in C++.
+
+**covert coupling** is the same as overt coupling except no permission is granted to the class.
+
+**surreptitious coupling** states that a class X knows the internal details of class Y through some means.
+If a class X uses a public data member of class Y, then X is said to be surreptitiously coupled to class Y.
+This is the most dangerous form of coupling because it creates a strong implicit dependency between the behavior of Y and the implementation of X.
+
+Arthur J. Riel. Object-Oriented Design Heuristic. 1996 
+
+### Object types
+
 According to an Ivar Jacobson objects have three different types. 
 In a book, he defines entity, 
 interface and control objects and those all have special purposes of object-oriented software.
