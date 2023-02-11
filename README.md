@@ -31,6 +31,7 @@ Added object types
 The current plan is to get an overall overview scope of the project. 
 Because this project is related to my thesis work and I have only limited time,
 I need to specify scope for this project.
+
 #### Updates
 * Fill readme.md file with ideas and what project is about
 * Determine project scope
