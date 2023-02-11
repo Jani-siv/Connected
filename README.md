@@ -12,8 +12,12 @@ Still, when creating class, we need to keep in mind all dependency's and avoid u
 
 # Project diary
 ## Planning
+**11.2.2023**
+Added few classes and example github actions
+
 **4.2.2023**
 Added class definition and coupling
+
 **1.2.2023**
 Added Composition and aggregate UML and short explanations
 
