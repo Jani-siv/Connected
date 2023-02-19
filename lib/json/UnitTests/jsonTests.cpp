@@ -182,4 +182,58 @@ TEST_F(JsonTests, AddNewObjectToExitingJsonFile)
     remove(filename_.c_str());
 };
 
+TEST_F(JsonTests, AddMemberToObject)
+{
+    std::vector<std::pair<std::string,std::string>> container = GenerateData("JsonClass","empty");
+    container.push_back(GeneratePairData("second","second"));
+    json::json::AddObjectsToJsonFile(filename_, container);
+
+    std::string dataFromJson;
+    std::vector<std::pair<type,args>> member;
+    std::pair<type,args>memberData("dependency","dateClass");
+    member.push_back(memberData);
+    json::AppObjectMembersToJsonFile(filename_, "JsonClass", member);
+    std::fstream file(filename_.c_str(), std::ios_base::in);
+    std::string testable;
+    int foundDep = 0;
+    int foundMember = 0;
+    while(not file.eof())
+    {
+        std::getline(file,testable);
+        if (testable.find("\"dependency\":[") != std::string::npos)
+        {
+            foundDep++;
+        }
+        if (testable.find("{\"JsonClass\":\"dateClass\"}") != std::string::npos)
+        {
+            foundMember++;
+        }
+    }
+    EXPECT_EQ(foundMember,1);
+    EXPECT_EQ(foundDep,1);
+    file.close();
+    member.push_back(memberData);
+    json::AppObjectMembersToJsonFile(filename_, "second", member);
+    file.open(filename_.c_str(), std::ios_base::in);
+    testable.clear();
+    foundDep = 0;
+    foundMember = 0;
+    while(not file.eof())
+    {
+        std::getline(file,testable);
+        if (testable.find("\"dependency\":[") != std::string::npos)
+        {
+            foundDep++;
+        }
+        if (testable.find("\"second\":\"dateClass\"") != std::string::npos)
+        {
+            foundMember++;
+        }
+    }
+    EXPECT_EQ(foundMember,2);
+    EXPECT_EQ(foundDep,2);
+    file.close();
+    remove(filename_.c_str());
+};
+
 } // namespace json::test

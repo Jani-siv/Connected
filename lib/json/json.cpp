@@ -1,4 +1,6 @@
 #include <fstream>
+#include <sstream>
+#include <cstring>
 #include "json.h"
 namespace json{
 
@@ -15,12 +17,25 @@ void json::AddObjectsToJsonFile(const std::string &filename, containerDataType &
     }
 }
 
-void json::AppObjectToJsonFile(const std::string &filename, const std::string &objName, const std::string &data)
+void json::AppObjectMembersToJsonFile(const std::string &filename, const std::string &objName,
+                                      const std::vector<std::pair<type,args>>& data)
 {
     size_t position = FindObjectPositionFromFile(filename, objName);
     if (position != 0)
        {
-           printf("HELLO: %zu\n",position);
+            std::vector<std::string> fromPosition = SplitFileFromPosition(filename, position);
+            std::string substr = fromPosition.at(0).substr(0,fromPosition.at(0).find_last_of('}')-1);
+           substr += ",";
+           substr += '\n';
+           //supported only an array type of members
+           substr = GenerateMemberString(data,objName,substr);
+           fromPosition.at(0) = substr.substr(0, substr.find_last_of(','));
+           fromPosition.at(0) += "\n]}";
+           (fromPosition.at(1).length() > 1) ? fromPosition.at(0) += ",\n" : fromPosition.at(0) += "\n";
+           fromPosition.at(0) += fromPosition.at(1);
+           std::fstream outFile(filename.c_str(), std::ios_base::out);
+           outFile.write(fromPosition.at(0).c_str(),static_cast<long>(fromPosition.at(0).length()));
+           outFile.close();
        }
 }
 
@@ -73,6 +88,45 @@ std::string json::GenerateObjectToFile(const std::string& filename, containerDat
         }
     }
     return tempData;
+}
+std::vector<std::string> json::SplitFileFromPosition(const std::string& filename, size_t position)
+{
+    std::ifstream file(filename.c_str(),std::ios_base::in);
+    char c[1]{};
+    std::string beginOfFile, endOfFile;
+    while (file.get(c[0])) {
+        auto pos = file.tellg();
+        if (pos <= position)
+        {
+            beginOfFile.push_back(c[0]);
+        }
+        else
+        {
+            endOfFile.push_back(c[0]);
+        }
+    }
+    file.close();
+    std::vector<std::string> data;
+    data.push_back(beginOfFile);
+    data.push_back(endOfFile);
+    return data;
+}
+std::string json::GenerateMemberString(const std::vector<std::pair<type, args>> &data,const std::string& objName, std::string substr)
+{
+    bool setNameOnce = false;
+    for (const auto& member : data)
+    {
+        std::string arrayName = member.first;
+        if (not setNameOnce)
+        {
+            substr += "\"" + arrayName + "\"" + ":[" + "\n" + "{\"" + objName + "\":\"" + member.second + "\"},\n";
+            setNameOnce = true;
+        }
+        else {
+            substr += "{\"" + objName + "\":\"" + member.second + "\"},\n";
+        }
+    }
+    return substr;
 }
 
 
