@@ -18,6 +18,11 @@ std::pair<std::string,std::string> GeneratePairData(std::string data, std::strin
     return emptyPair;
 }
 
+bool IsEmptyLine(const std::string& testable)
+{
+    return (testable.length() == 0);
+}
+
 class JsonTests : public testing::Test
 {
 public:
@@ -31,7 +36,7 @@ public:
 TEST_F(JsonTests, EmptyContainer)
 {
     std::string empty;
-    std::vector<std::pair<std::string,std::string>> container;// = GenerateData(empty,empty);
+    std::vector<std::pair<std::string,std::string>> container;
     json::json::AddObjectsToJsonFile(filename_, container);
     std::fstream file(filename_.c_str(), std::ios_base::in);
     EXPECT_FALSE(file.is_open());
@@ -57,11 +62,12 @@ TEST_F(JsonTests, ValidOneObjectData)
     std::fstream file(filename_.c_str(), std::ios_base::in);
     EXPECT_TRUE(file.is_open());
     std::string dataFromJson;
-    while(not file.eof())
-    {
-        std::getline(file,dataFromJson);
+    while(not file.eof()) {
+        std::getline(file, dataFromJson);
+        if (not IsEmptyLine(dataFromJson)) {
+            EXPECT_EQ("{ empty : empty }", dataFromJson);
+        }
     }
-    EXPECT_EQ("{ empty : empty }",dataFromJson);
     file.close();
     remove(filename_.c_str());
 };
@@ -80,11 +86,12 @@ TEST_F(JsonTests, ValidTwoObjectData)
         std::getline(file,dataFromJson);
         if (count == 1)
         {
-            EXPECT_EQ("{ empty : empty },",dataFromJson);
+            EXPECT_EQ("{ empty : empty }",dataFromJson);
             count++;
         }
         else
-            EXPECT_EQ("{ second : second }",dataFromJson);
+            if (not IsEmptyLine(dataFromJson)){
+            EXPECT_EQ("{ second : second }",dataFromJson);}
     }
     file.close();
     remove(filename_.c_str());
@@ -105,12 +112,15 @@ TEST_F(JsonTests, TwoObjectHaveSameNameNotAddedToFile)
         std::getline(file,dataFromJson);
         if (count == 1)
         {
-            EXPECT_EQ("{ empty : empty },",dataFromJson);
+            EXPECT_EQ("{ empty : empty }",dataFromJson);
             count++;
         }
         else
+        {
+        if (not IsEmptyLine(dataFromJson)){
             EXPECT_EQ("{ second : second }",dataFromJson);
-            count++;
+            count++;}
+        }
     }
     file.close();
     remove(filename_.c_str());
@@ -131,12 +141,42 @@ TEST_F(JsonTests, AddTwoTimesSameObject)
         std::getline(file,dataFromJson);
         if (count == 1)
         {
-            EXPECT_EQ("{ empty : empty },",dataFromJson);
+            EXPECT_EQ("{ empty : empty }",dataFromJson);
             count++;
         }
-        else
-            EXPECT_EQ("{ second : second }",dataFromJson);
-        count++;
+        else {
+            if (not IsEmptyLine(dataFromJson)){
+                EXPECT_EQ("{ second : second }", dataFromJson);
+            count++;}
+        }
+    }
+    file.close();
+    remove(filename_.c_str());
+};
+
+TEST_F(JsonTests, AddNewObjectToExitingJsonFile)
+{
+    std::vector<std::pair<std::string,std::string>> container = GenerateData("empty","empty");
+    container.push_back(GeneratePairData("second","second"));
+    json::json::AddObjectsToJsonFile(filename_, container);
+    json::json::AddObjectsToJsonFile(filename_, container);
+    std::fstream file(filename_.c_str(), std::ios_base::in);
+    EXPECT_TRUE(file.is_open());
+    std::string dataFromJson;
+    int count = 1;
+    while(not file.eof())
+    {
+        std::getline(file,dataFromJson);
+        if (count == 1)
+        {
+            EXPECT_EQ("{ empty : empty }",dataFromJson);
+            count++;
+        }
+        else {
+            if(not IsEmptyLine(dataFromJson)){
+                EXPECT_EQ("{ second : second }", dataFromJson);
+            count++;}
+        }
     }
     file.close();
     remove(filename_.c_str());

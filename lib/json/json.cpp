@@ -7,8 +7,11 @@ void json::AddObjectsToJsonFile(const std::string &filename, containerDataType &
     if (IsContainerDataValid(data)) {
         std::string objectData = GenerateObjectToFile(filename, data);
         std::fstream file(filename.c_str(), std::ios_base::app);
-        file.write(objectData.c_str(),static_cast<long>(objectData.length()));
-        file.close();
+        if (file.is_open())
+        {
+            file.write(objectData.c_str(),static_cast<long>(objectData.length()));
+            file.close();
+        }
     }
 }
 
@@ -41,6 +44,7 @@ size_t json::FindObjectPositionFromFile(const std::string &filename, const std::
 {
     std::fstream file(filename.c_str(),std::ios_base::in);
     size_t position = 0;
+    if (not file.is_open()) { return position;}
     if (file.is_open())
     {
         std::string line;
@@ -64,18 +68,12 @@ std::string json::GenerateObjectToFile(const std::string& filename, containerDat
     for (const auto& pairData : data)
     {
         if ((FindObjectPositionFromFile(filename, pairData.first) == 0) &&
-            (tempData.find(pairData.first) > tempData.length())) {
-            tempData += "{ " + pairData.first + " : " + pairData.second + " },\n";
+            (tempData.find(pairData.first) > tempData.length())){
+            tempData += "{ " + pairData.first + " : " + pairData.second + " }\n";
         }
-        }
-    return RemoveTrailingNlAndComma(tempData);
-}
-
-std::string &json::RemoveTrailingNlAndComma(std::string &tempData)
-{
-    auto pos = tempData.find_last_of(',');
-    tempData = tempData.substr(0,pos);
+    }
     return tempData;
 }
+
 
 } //namespace json

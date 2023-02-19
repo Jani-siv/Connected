@@ -13,7 +13,6 @@ public:
 private:
     static bool IsContainerDataValid(const containerDataType& data);
     static std::string GenerateObjectToFile(const std::string& filename, containerDataType& data);
-    static std::string &RemoveTrailingNlAndComma(std::string &tempData);
     static size_t FindObjectPositionFromFile(const std::string &filename, const std::string &objectname);
 };
 
