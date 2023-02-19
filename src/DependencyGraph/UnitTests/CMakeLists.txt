@@ -16,8 +16,8 @@ set(TESTNAME DependencyGraphTests)
 project(${TESTNAME})
 
 set(SOURCEFILES
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/DependencyGraph.cpp
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/UnitTests/DependencyGraphTests.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/DependencyGraph.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/UnitTests/DependencyGraphTests.cpp
         )
 
 enable_testing()
@@ -26,15 +26,15 @@ add_executable(
         ${TESTNAME}
         ${SOURCEFILES}
 )
-target_link_libraries(${TESTNAME} gtest gmock gtest_main)
+target_link_libraries(${TESTNAME} gtest gmock gtest_main json)
 add_test(${TESTNAME} ${TESTNAME}Tests)
 
 set(TESTNAME ObjectClassTests)
 project(${TESTNAME})
 
 set(SOURCEFILES
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/ObjectClass.cpp
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/UnitTests/ObjectClassTests.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/ObjectClass.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/UnitTests/ObjectClassTests.cpp
         )
 
 enable_testing()
@@ -43,15 +43,15 @@ add_executable(
         ${TESTNAME}
         ${SOURCEFILES}
 )
-target_link_libraries(${TESTNAME} gtest gmock gtest_main)
+target_link_libraries(${TESTNAME} gtest gmock gtest_main json)
 add_test(${TESTNAME} ${TESTNAME}Tests)
 
 set(TESTNAME EntityParserTests)
 project(${TESTNAME})
 
 set(SOURCEFILES
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/EntityParser.cpp
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/UnitTests/EntityParserTests.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/EntityParser.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/UnitTests/EntityParserTests.cpp
         )
 
 enable_testing()
@@ -60,15 +60,15 @@ add_executable(
         ${TESTNAME}
         ${SOURCEFILES}
 )
-target_link_libraries(${TESTNAME} gtest gmock gtest_main)
+target_link_libraries(${TESTNAME} gtest gmock gtest_main json)
 add_test(${TESTNAME} ${TESTNAME}Tests)
 
 set(TESTNAME EntityCreatorTests)
 project(${TESTNAME})
 
 set(SOURCEFILES
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/EntityCreator.cpp
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/UnitTests/EntityCreatorTests.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/EntityCreator.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/UnitTests/EntityCreatorTests.cpp
         )
 
 enable_testing()
@@ -77,15 +77,15 @@ add_executable(
         ${TESTNAME}
         ${SOURCEFILES}
 )
-target_link_libraries(${TESTNAME} gtest gmock gtest_main)
+target_link_libraries(${TESTNAME} gtest gmock gtest_main json)
 add_test(${TESTNAME} ${TESTNAME}Tests)
 
 set(TESTNAME CmakeParserTests)
 project(${TESTNAME})
 
 set(SOURCEFILES
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/CmakeParser.cpp
-        ${CMAKE_SOURCE_DIR}/DependencyGraph/UnitTests/CmakeParserTests.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/CmakeParser.cpp
+        ${CMAKE_SOURCE_DIR}/src/DependencyGraph/UnitTests/CmakeParserTests.cpp
         )
 
 enable_testing()
